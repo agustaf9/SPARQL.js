@@ -59,6 +59,9 @@
     // Return absolute IRIs unmodified
     if (/^[a-z]+:/i.test(iri))
       return iri;
+    // Return blank node IRIs unmodified if skipValidation is enabled
+    if (iri.startsWith('_:') && Parser.skipValidation)
+      return iri;
     if (!Parser.base)
       throw new Error('Cannot resolve relative IRI ' + iri + ' because no base IRI was set.');
     if (base !== Parser.base) {
